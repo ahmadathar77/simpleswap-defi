@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimpleSwap - DeFi Token Swap</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0f1117; color: #fff; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+    .container { background: #1a1d27; border-radius: 20px; padding: 32px; width: 420px; border: 1px solid #2d2f3e; }
+    h1 { font-size: 24px; margin-bottom: 4px; color: #fff; }
+    .subtitle { color: #888; font-size: 14px; margin-bottom: 28px; }
+    .swap-box { background: #0f1117; border-radius: 12px; padding: 16px; margin-bottom: 12px; border: 1px solid #2d2f3e; }
+    .swap-label { font-size: 12px; color: #888; margin-bottom: 8px; }
+    .swap-input { display: flex; justify-content: space-between; align-items: center; }
+    input[type=number] { background: none; border: none; color: #fff; font-size: 24px; width: 60%; outline: none; }
+    .token-badge { background: #2d2f3e; border-radius: 20px; padding: 6px 14px; font-size: 14px; font-weight: 600; }
+    .arrow { text-align: center; font-size: 20px; margin: 8px 0; color: #555; }
+    .output-amount { font-size: 24px; color: #4ade80; }
+    .fee-note { font-size: 12px; color: #888; margin-top: 8px; }
+    .swap-btn { width: 100%; padding: 16px; background: linear-gradient(135deg, #6366f1, #8b5cf6); border: none; border-radius: 12px; color: #fff; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 16px; transition: opacity 0.2s; }
+    .swap-btn:hover { opacity: 0.9; }
+    .info { margin-top: 20px; padding: 12px; background: #0f1117; border-radius: 10px; font-size: 13px; color: #888; border: 1px solid #2d2f3e; }
+    .info span { color: #6366f1; font-size: 11px; word-break: break-all; }
+    .status { margin-top: 12px; padding: 10px; border-radius: 8px; font-size: 13px; text-align: center; display: none; }
+    .status.success { background: #052e16; color: #4ade80; display: block; }
+    .status.error { background: #2d0a0a; color: #f87171; display: block; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚡ SimpleSwap</h1>
+    <p class="subtitle">DeFi Token Swap on Sepolia Testnet</p>
+
+    <div class="swap-box">
+      <div class="swap-label">You pay</div>
+      <div class="swap-input">
+        <input type="number" id="amountIn" placeholder="0.0" min="0" oninput="calcOutput()">
+        <span class="token-badge">ETH</span>
+      </div>
+    </div>
+
+    <div class="arrow">↓</div>
+
+    <div class="swap-box">
+      <div class="swap-label">You receive (after 3% fee)</div>
+      <div class="swap-input">
+        <span class="output-amount" id="amountOut">0.0</span>
+        <span class="token-badge">TOKEN</span>
+      </div>
+      <div class="fee-note">Fee: <span id="feeAmt">0.0</span> ETH</div>
+    </div>
+
+    <button class="swap-btn" onclick="doSwap()">Swap Now</button>
+    <div class="status" id="status"></div>
+
+    <div class="info">
+      Contract: <br><span>0x961...57921 (Sepolia)</span>
+    </div>
+  </div>
+
+  <script>
+    function calcOutput() {
+      const val = parseFloat(document.getElementById('amountIn').value) || 0;
+      const out = val * 0.97;
+      const fee = val * 0.03;
+      document.getElementById('amountOut').innerText = out.toFixed(4);
+      document.getElementById('feeAmt').innerText = fee.toFixed(4);
+    }
+
+    function doSwap() {
+      const val = parseFloat(document.getElementById('amountIn').value) || 0;
+      const status = document.getElementById('status');
+      if (val <= 0) {
+        status.className = 'status error';
+        status.innerText = 'Please enter an amount greater than 0';
+        return;
+      }
+      status.className = 'status success';
+      status.innerText = '✓ Swap simulated! ' + val + ' ETH → ' + (val * 0.97).toFixed(4) + ' TOKEN';
+    }
+  </script>
+</body>
+</html>
