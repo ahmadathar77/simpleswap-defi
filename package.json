@@ -1,0 +1,25 @@
+{
+  "name": "simpleswap-defi",
+  "version": "1.0.0",
+  "description": "A simple DeFi token swap interface built on OPN Chain / Sepolia testnet",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "dependencies": {
+    "ethers": "^6.13.0"
+  },
+  "devDependencies": {
+    "hardhat": "^2.22.0"
+  },
+  "keywords": [
+    "defi",
+    "web3",
+    "ethereum",
+    "smart-contract",
+    "swap",
+    "solidity"
+  ],
+  "author": "ahmadathar77",
+  "license": "MIT"
+}
